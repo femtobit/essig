@@ -1,0 +1,61 @@
+Essig
+=====
+
+Module
+------
+
+ * Startup
+   * Eingabedaten einlesen
+ * Konfiguration
+   * Auf Schwerpunkt zuruecksetzen
+   * xyz-Bewegung
+   * Drehung
+ * Energie berechnen
+   * Orca aufrufen und auslesen
+   * Energie akzeptieren oder ablehnen
+ * Daten ausgeben/visualisieren
+   * Molden-Format
+
+ Parameter
+ ---------
+ 
+ * Schrittzahl
+ * Zu verwerfende Schritte am Anfang
+ * (Max.) Schritgroesse fuer xyz-Bewegungen der Atome
+ * (Max.) Winkel fuer Drehungen
+ * Verhaeltnis xyz-Bewegung/Drehung
+ 
+ Datenstrukturen
+ ---------------
+ 
+ === Schnittstelle: ===
+ 
+ * Molekuel:
+   * Array von Atomen
+   * Bindungen (Array von ID-Paaren?)
+   * Ladung
+   
+ * Atom: struct mit
+   * ID
+   * Element ("H", "C", ...)
+   * Koordinaten
+ 
+ === etc ==
+ 
+ (* struct aus Molekuel, Energiewert)
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
