@@ -4,16 +4,16 @@ Essig
 Module
 ------
 
- * Startup
+ * Startup/main [Damian]
    * Eingabedaten einlesen
  * Konfiguration
-   * Auf Schwerpunkt zuruecksetzen
-   * xyz-Bewegung
-   * Drehung
+   * Auf Schwerpunkt zuruecksetzen [Florian, Fabian]
+   * xyz-Bewegung [Florian, Fabian]
+   * Drehung [Michael]
  * Energie berechnen
-   * Orca aufrufen und auslesen
-   * Energie akzeptieren oder ablehnen
- * Daten ausgeben/visualisieren
+   * Orca aufrufen und auslesen [Sebastian]
+   * Energie akzeptieren oder ablehnen [Robert, Niek]
+ * Daten ausgeben/visualisieren [Robert, Niek]
    * Molden-Format
 
  Parameter
@@ -21,7 +21,7 @@ Module
  
  * Schrittzahl
  * Zu verwerfende Schritte am Anfang
- * (Max.) Schrittgroesse fuer xyz-Bewegungen der Atome
+ * (Max.) Schritgroesse fuer xyz-Bewegungen der Atome
  * (Max.) Winkel fuer Drehungen
  * Verhaeltnis xyz-Bewegung/Drehung
  
