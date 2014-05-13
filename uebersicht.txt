@@ -4,17 +4,17 @@ Essig
 Module
 ------
 
- * Startup/main [Damian]
-   * Eingabedaten einlesen
- * Konfiguration
-   * Auf Schwerpunkt zuruecksetzen [Florian, Fabian]
-   * xyz-Bewegung [Florian, Fabian]
-   * Drehung [Michael]
- * Energie berechnen
-   * Orca aufrufen und auslesen [Sebastian]
-   * Energie akzeptieren oder ablehnen [Robert, Niek]
- * Daten ausgeben/visualisieren [Robert, Niek]
-   * Molden-Format
+* Startup/main [Damian]
+	* Eingabedaten einlesen
+* Konfiguration
+	* Auf Schwerpunkt zuruecksetzen [Florian, Fabian]
+	* xyz-Bewegung [Florian, Fabian]
+	* Drehung [Michael]
+* Energie berechnen
+	* Orca aufrufen und auslesen [Sebastian]
+	* Energie akzeptieren oder ablehnen [Robert, Niek]
+* Daten ausgeben/visualisieren [Robert, Niek]
+ 	 * Molden-Format
 
  Parameter
  ---------
@@ -28,34 +28,17 @@ Module
  Datenstrukturen
  ---------------
  
- === Schnittstelle: ===
+### Schnittstelle:
  
- * Molekuel:
-   * Array von Atomen
-   * Bindungen (Array von ID-Paaren?)
-   * Ladung
+* Molekuel:
+	* Array von Atomen
+  	* Bindungen (Array von ID-Paaren?)
+  	* Ladung
    
- * Atom: struct mit
-   * ID
-   * Element ("H", "C", ...)
-   * Koordinaten
+* Atom: struct mit
+	* ID
+	* Element ("H", "C", ...)
+	* Koordinaten
  
- === etc ==
- 
- (* struct aus Molekuel, Energiewert)
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
+### etc:
+ 	* (struct aus Molekuel, Energiewert)
