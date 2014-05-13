@@ -21,7 +21,7 @@ Module
  
  * Schrittzahl
  * Zu verwerfende Schritte am Anfang
- * (Max.) Schritgroesse fuer xyz-Bewegungen der Atome
+ * (Max.) Schrittgroesse fuer xyz-Bewegungen der Atome
  * (Max.) Winkel fuer Drehungen
  * Verhaeltnis xyz-Bewegung/Drehung
  
