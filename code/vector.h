@@ -11,7 +11,7 @@ Vector vector_add(const Vector x, const Vector y);
 Vector vector_substract(const Vector x, const Vector y);
 
 /// Gibt einen Vektor z = a mal x zurück
-double vector_scalar_mult(const Vector x, const double a);
+Vector vector_scalar_mult(const Vector x, const double a);
 
 /// Gibt das Skalarprodukt z = x mal y zurück.
 double vector_scalar_product(const Vector x, const Vector y);
