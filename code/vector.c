@@ -10,10 +10,11 @@
 /// Gibt einen Vektor z = x + y zurück
 Vector vector_add(const Vector x, const Vector y)
 {
-  Vector z = {0, 0, 0};
-  z[0] = x[0] + y[0];
-  z[1] = x[1] + y[1];
-  z[2] = x[2] + y[2];
+  Vector z;
+  z.x = {0, 0, 0};
+  z.x[0] = x.x[0] + y.x[0];
+  z.x[1] = x.x[1] + y.x[1];
+  z.x[2] = x.x[2] + y.x[2];
   return z;
 }
 
