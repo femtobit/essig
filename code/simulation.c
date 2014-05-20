@@ -1,4 +1,4 @@
-#include "simulation.h"
+#include "essig.h"
 
 void run_simulation(Molecule *mol,
                     unsigned int step_count,

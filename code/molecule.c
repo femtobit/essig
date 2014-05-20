@@ -1,4 +1,4 @@
-#include "data-structures.h"
+#include "essig.h"
 
 #include <stdio.h>
 #include <stdlib.h>
