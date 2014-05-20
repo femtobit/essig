@@ -1,3 +1,10 @@
+/**
+ * Here some universal Vector functions
+ * 
+ * Author(s):
+ *   Michael Hufschmidt <michael@hufschmidt-web.de>
+ */
+
 #ifndef ESSIG_VECTOR_H
 #define ESSIG_VECTOR_H
 
@@ -11,9 +18,9 @@ Vector vector_add(const Vector x, const Vector y);
 Vector vector_substract(const Vector x, const Vector y);
 
 /// Gibt einen Vektor z = a mal x zurück
-double vector_scalar_mult(const Vector x, const double a);
+Vector vector_scalar_mult(const Vector x, const double a);
 
-/// Gibt das Skalarprodukt z = x mal y zurück.
+/// Gibt das Skalarprodukt p = x mal y zurück.
 double vector_scalar_product(const Vector x, const Vector y);
 
 /// Gibt den um den Winkel phi um die z-Achse rotierten Vektor x zurück
