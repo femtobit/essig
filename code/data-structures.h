@@ -54,4 +54,9 @@ Molecule *molecule_new_from_file(FILE *fp);
  */
 void molecule_free(Molecule *mol);
 
+/**
+ * Run Orca to get the energy of the given molecule.
+ */
+double get_energy(Molecule *mol);
+
 #endif
