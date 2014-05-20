@@ -126,6 +126,6 @@ void molden_output_molecule(const Molecule *mol);
 /**
  * Run Orca to get the energy of the given molecule.
  */
-double orca_calculate_energy(Molecule *mol);
+double orca_calculate_energy(const Molecule *mol);
 
 #endif
