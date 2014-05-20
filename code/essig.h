@@ -1,12 +1,14 @@
+/**
+ * This file is part of essig.
+ * 
+ * Authors:
+ * 	Damian Hofmann <2hofmann@inf>
+ */
 
-
-#ifndef ESSIG_DATASTRUCTURES_H
-#define ESSIG_DATASTRUCTURES_H
+#ifndef ESSIG_H
+#define ESSIG_H
 
 #include <stdio.h>
-
-typedef double[3] Vector;
-typedef double[3][3] Matrix;
 
 typedef struct
 {
@@ -67,6 +69,7 @@ typedef struct
  *                                   molecule configurations generated in each step.
  */
 void run_simulation(Molecule *mol,
+		    size_t molecule_count,
                     unsigned int step_count,
                     unsigned int drop_count,
                     double max_dist,
@@ -76,6 +79,24 @@ void run_simulation(Molecule *mol,
                     bool output_intermediate);
 
 /**
+ * Moves the molecule @p mol, so that its first atom
+ * is exactly at the origin (0, 0, 0).
+ */
+void transform_reset_origin(Molecule *mol);
+
+/**
+ * Move a radomly selected atom of @p mol b a
+ * random value between 0 and @p max_dist.
+ */
+void transform_random_displacement(Molecule *mol, double max_dist);
+
+/**
+ * Rotate the molecule @p mol around a radomly selected bond
+ * by a random angle between 0 and @p max_angle.
+ */
+void transform_random_rotation(Molecule *mol, double max_angle);
+
+/**
  * Loads molecule data from the file 'fp',
  * TODO: Currently only returns the data of a hard-coded
  *       CH3COOH molecule.
@@ -83,13 +104,28 @@ void run_simulation(Molecule *mol,
 Molecule *molecule_new_from_file(FILE *fp);
 
 /**
+ * Returns a deep copy of the Molecule @p src.
+ */
+Molecule *molecule_copy(const Molecule *src);
+
+/**
  * Frees the memory allocated for the molecule data.
  */
 void molecule_free(Molecule *mol);
 
 /**
+ * Returns a list of the molecule's atoms in the orca/molden format.
+ */
+char *molecule_format_atom_list(const Molecule *mol);
+
+/**
+ * Writes the molecule to a file in molden format.
+ */
+void molden_output_molecule(const Molecule *mol);
+
+/**
  * Run Orca to get the energy of the given molecule.
  */
-double get_energy(Molecule *mol);
+double orca_calculate_energy(Molecule *mol);
 
 #endif

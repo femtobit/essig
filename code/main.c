@@ -2,8 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "data-structures.h"
-#include "simulation.h"
+#include "essig.h"
 
 static const char *usage = "Usage: %s <input>\n";
 
@@ -29,7 +28,8 @@ int main(int argc, char *argv[])
   }
 
   Molecule *molecule = molecule_new_from_file(NULL);
-  run_simulation(molecule, default_step_count, default_drop_count,
+  
+  run_simulation(molecule, 1, default_step_count, default_drop_count,
                  default_max_dist, default_max_angle, default_rotation_translation_ratio,
                  default_temperature, true);
 
