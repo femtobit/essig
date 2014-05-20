@@ -1,8 +1,8 @@
 #ifndef ESSIG_VECTOR_H
 #define ESSIG_VECTOR_H
 
-typedef double[3] Vector;
-typedef double[3][3] Matrix;
+typedef struct { double x[3]; }    Vector;
+typedef struct { double m[3][3]; } Matrix;
 
 /// Gibt einen Vektor z = x + y zurück
 Vector vector_add(const Vector x, const Vector y);
