@@ -1,6 +1,6 @@
 /**
  * Here universal Vector functions
- * 
+ *
  * Author(s):
  *   Michael Hufschmidt <michael@hufschmidt-web.de>
  */

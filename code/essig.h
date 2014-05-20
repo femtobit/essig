@@ -8,7 +8,13 @@
 #ifndef ESSIG_H
 #define ESSIG_H
 
+#include <assert.h>
+#include <stdbool.h>
 #include <stdio.h>
+
+#include "vector.h"
+
+#define BOLTZMANN_CONSTANT 1.3806488e-23 // J/K
 
 typedef struct
 {
@@ -69,7 +75,7 @@ typedef struct
  *                                   molecule configurations generated in each step.
  */
 void run_simulation(Molecule *mol,
-		    size_t molecule_count,
+                    size_t molecule_count,
                     unsigned int step_count,
                     unsigned int drop_count,
                     double max_dist,
@@ -97,16 +103,23 @@ void transform_random_displacement(Molecule *mol, double max_dist);
 void transform_random_rotation(Molecule *mol, double max_angle);
 
 /**
- * Loads molecule data from the file 'fp',
+ * Returns a pointer to a newly allocated and zero initialized molecule.
+ */
+Molecule *molecule_new();
+
+/**
+ * Loads molecule data from the file 'fp' into @p mol.
  * TODO: Currently only returns the data of a hard-coded
  *       CH3COOH molecule.
  */
-Molecule *molecule_new_from_file(FILE *fp);
+void molecule_read_from_file(Molecule *mol, FILE *fp);
 
 /**
- * Returns a deep copy of the Molecule @p src.
+ * Performs a deep copy of the Molecule @p src to @p dest.
+ * This operation requires dest->atoms and dest->bonds to be
+ * already allocated or NULL.
  */
-Molecule *molecule_copy(const Molecule *src);
+void molecule_deep_copy(Molecule *dest, const Molecule *src);
 
 /**
  * Frees the memory allocated for the molecule data.

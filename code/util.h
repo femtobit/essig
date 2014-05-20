@@ -1,3 +1,9 @@
+/**
+ * This file is part of essig.
+ * 
+ * Authors:
+ * 	Damian Hofmann <2hofmann@inf>
+ */
 #ifndef ESSIG_UTIL_H
 #define ESSIG_UTIL_H
 
