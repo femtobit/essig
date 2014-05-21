@@ -51,12 +51,8 @@ double vector_scalar_product(const Vector x, const Vector y)
 Vector vector_rotate_z(const Vector x, const double phi)
 {
   Vector z = {{0, 0, 0}};
-  z.x[0] = x.x[0];
-  z.x[1] = x.x[1];
-  // TODO
-  //vector.c:(.text+0x14a): undefined reference to `cos' ...
-  // z.x[0] = cos(phi) * x.x[0] - sin(phi) * x.x[1];
-  // z.x[1] = sin(phi) * x.x[0] + cos(phi) * x.x[1];
+  z.x[0] = cos(phi) * x.x[0] - sin(phi) * x.x[1];
+  z.x[1] = sin(phi) * x.x[0] + cos(phi) * x.x[1];
   z.x[2] = x.x[2];
   return z;
 }
