@@ -12,3 +12,6 @@ essig: main.o molecule.o simulation.o mock.o
 
 %.o: %.c $(HEADERS)
 	$(CC) -c -o $@ $< $(CFLAGS)
+
+clean:
+	rm *.x *.o *~
