@@ -11,7 +11,7 @@
 /// Gibt einen Vektor z = x + y zurück
 Vector vector_add(const Vector x, const Vector y)
 {
-  Vector z;
+  Vector z = {{0, 0, 0}};
   z.x[0] = x.x[0] + y.x[0];
   z.x[1] = x.x[1] + y.x[1];
   z.x[2] = x.x[2] + y.x[2];
@@ -21,7 +21,7 @@ Vector vector_add(const Vector x, const Vector y)
 /// Gibt einen Vektor z = x - y zurück
 Vector vector_substract(const Vector x, const Vector y)
 {
-  Vector z;
+  Vector z = {{0, 0, 0}};
   z.x[0] = x.x[0] - y.x[0];
   z.x[1] = x.x[1] - y.x[1];
   z.x[2] = x.x[2] - y.x[2];
@@ -46,10 +46,11 @@ double vector_scalar_product(const Vector x, const Vector y)
   return p;
 }
 
+
 /// Gibt den um den Winkel phi um die z-Achse rotierten Vektor x zurück
 Vector vector_rotate_z(const Vector x, const double phi)
 {
-  Vector z;
+  Vector z = {{0, 0, 0}};
   z.x[0] = x.x[0];
   z.x[1] = x.x[1];
   // TODO
@@ -64,7 +65,7 @@ Vector vector_rotate_z(const Vector x, const double phi)
 Vector matrix_times_vector(const Matrix A, const Vector x)
 {
   int i, j;
-  Vector z;
+  Vector z = {{0, 0, 0}};
   for (i = 0; i < 2; i++)
   {
     z.x[i] = 0;
@@ -90,5 +91,3 @@ Matrix matrix_transpose(const Matrix A)
   }
   return B;
 }
-
-
