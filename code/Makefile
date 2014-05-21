@@ -14,4 +14,4 @@ essig: main.o molecule.o simulation.o mock.o
 	$(CC) -c -o $@ $< $(CFLAGS)
 
 clean:
-	rm *.x *.o *~
+	rm -f *.x *.o *~
