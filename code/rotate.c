@@ -30,7 +30,7 @@ void molekule_rotate(Molecule *m, const Bond b, const double phi)
 // entsprechend modifiziertes Molekül zurück.
 Molecule molekule_rotated(const Molecule *m, const Bond b, const double phi)
 {
-  Molecule *mr = NULL;
+  Molecule *mr = molecule_new();
   molecule_deep_copy(mr, m);
   molekule_rotate(mr, b, phi);
   return *mr;
