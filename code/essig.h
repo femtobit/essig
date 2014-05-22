@@ -1,8 +1,8 @@
 /**
  * This file is part of essig.
- * 
+ *
  * Authors:
- * 	Damian Hofmann <2hofmann@inf>
+ *  Damian Hofmann <2hofmann@inf>
  */
 
 #ifndef ESSIG_H
@@ -105,7 +105,7 @@ void transform_random_rotation(Molecule *mol, double max_angle);
 /**
  * Returns a pointer to a newly allocated and zero initialized molecule.
  */
-Molecule *molecule_new();
+Molecule *molecule_new(void);
 
 /**
  * Loads molecule data from the file 'fp' into @p mol.

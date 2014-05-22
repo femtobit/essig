@@ -36,7 +36,7 @@ static Molecule *new_test_molecule()
   return mol;
 }
 
-Molecule *molecule_new()
+Molecule *molecule_new(void)
 {
   Molecule *mol = calloc(1, sizeof *mol);
   CHECK_ALLOC(mol);
