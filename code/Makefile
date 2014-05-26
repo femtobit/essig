@@ -1,17 +1,22 @@
 CC=gcc
-CFLAGS=-Wall -std=gnu99 -lm
+CFLAGS=-std=gnu99 -Wall -Wextra -pedantic
+LD=$(CC)
+LDFLAGS=-lm
+TARGET=essig
+OBJECTS=main.o molecule.o simulation.o mock.o orca_calculate_energy.c
 
 debug: CFLAGS+=-g
 debug: essig
 
 release: CFLAGS+=-O3 -Werror
+release: LDFLAGS+=-s
 release: essig
 
-essig: main.o molecule.o simulation.o mock.o
-	$(CC) $(CFLAGS) -o essig main.o molecule.o simulation.o mock.o
+$(TARGET): $(OBJECTS)
+	$(LD) $(LDFLAGS) -o $(TARGET) $+
 
 %.o: %.c $(HEADERS)
-	$(CC) -c -o $@ $< $(CFLAGS)
+	$(CC) $(CFLAGS) -c -o $@ $<
 
 clean:
-	rm -f *.x *.o *~
+	$(RM) $(TARGET) *.o *~
