@@ -90,9 +90,19 @@ Matrix matrix_transpose(const Matrix A)
 /// Erzeugt eine Drehmatrix in der "x-Konvention"
 /// aus den 3 Eulerschen Winkeln e1, e2, e3
 /// Siehe http://de.wikipedia.org/wiki/Eulersche_Winkel
+/// e1 = Phi, e2 = Theta, e3 = Psi
 Matrix euler_rotate(const double e1, const double e2, const double e3)
 {
-  Matrix R = {{{1.0, 0, 0},{0, 1.0, 0},{0, 0, 1.0}}};
-  // TODO Das ist erstmal nur die Einheitsmatrix
+  Matrix R = {{{1.0, 0, 0},{0, 1.0, 0},{0, 0, 1.0}}}; // Einheitsmatrix
+  // return R;  // nur zum Testen
+  R.m[0][0] = 0.0 + cos(e3) * cos(e1) - cos(e2) * sin(e1) * sin(e3);
+  R.m[0][1] = 0.0 + cos(e3) * sin(e1) + cos(e2) * cos(e1) * sin(e3);
+  R.m[0][2] = 0.0 + sin(e3) * sin(e2);
+  R.m[1][0] = 0.0 - sin(e3) * cos(e1) - cos(e2) * sin(e1) * cos(e3);
+  R.m[1][1] = 0.0 - sin(e3) * sin(e1) + cos(e2) * cos(e1) * cos(e3);
+  R.m[1][2] = 0.0 + cos(e3) * sin(e2);
+  R.m[2][0] = 0.0 + sin(e2) * sin(e1);
+  R.m[2][1] = 0.0 - sin(e2) * cos(e1);
+  R.m[3][2] = 0.0 + cos(e2);
   return R;	
 }

@@ -35,6 +35,7 @@ Matrix matrix_transpose(const Matrix A);
 /// Erzeugt eine Drehmatrix in der "x-Konvention"
 /// aus den 3 Eulerschen Winkeln e1, e2, e3
 /// Siehe http://de.wikipedia.org/wiki/Eulersche_Winkel
+/// e1 = Phi, e2 = Theta, e3 = Psi
 Matrix euler_rotate(const double e1, const double e2, const double e3);
 
 
