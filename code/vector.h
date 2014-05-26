@@ -32,4 +32,10 @@ Vector matrix_times_vector(const Matrix A, const Vector x);
 /// Gibt die zu A transponierte Matrix At zurück
 Matrix matrix_transpose(const Matrix A);
 
+/// Erzeugt eine Drehmatrix in der "x-Konvention"
+/// aus den 3 Eulerschen Winkeln e1, e2, e3
+/// Siehe http://de.wikipedia.org/wiki/Eulersche_Winkel
+Matrix euler_rotate(const double e1, const double e2, const double e3);
+
+
 #endif//ESSIG_VECTOR_H

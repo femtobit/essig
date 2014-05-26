@@ -46,7 +46,6 @@ double vector_scalar_product(const Vector x, const Vector y)
   return p;
 }
 
-
 /// Gibt den um den Winkel phi um die z-Achse rotierten Vektor x zurück
 Vector vector_rotate_z(const Vector x, const double phi)
 {
@@ -86,4 +85,14 @@ Matrix matrix_transpose(const Matrix A)
     }
   }
   return B;
+}
+
+/// Erzeugt eine Drehmatrix in der "x-Konvention"
+/// aus den 3 Eulerschen Winkeln e1, e2, e3
+/// Siehe http://de.wikipedia.org/wiki/Eulersche_Winkel
+Matrix euler_rotate(const double e1, const double e2, const double e3)
+{
+  Matrix R = {{{1.0, 0, 0},{0, 1.0, 0},{0, 0, 1.0}}};
+  // TODO Das ist erstmal nur die Einheitsmatrix
+  return R;	
 }
