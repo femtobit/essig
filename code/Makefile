@@ -6,11 +6,11 @@ TARGET=essig
 OBJECTS=main.o molecule.o simulation.o mock.o orca_calculate_energy.c
 
 debug: CFLAGS+=-g
-debug: essig
+debug: $(TARGET)
 
 release: CFLAGS+=-O3 -Werror
 release: LDFLAGS+=-s
-release: essig
+release: $(TARGET)
 
 $(TARGET): $(OBJECTS)
 	$(LD) $(LDFLAGS) -o $(TARGET) $+
