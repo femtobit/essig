@@ -28,7 +28,7 @@ void molekule_rotate(Molecule *m, const Bond b, const double phi)
   assert(b.first != NULL);
   assert(fabs(phi) < 100.0);
   ursprung = b.first->pos;
-  // TODO noch keine Funktionalität
+  
   // 1. Verschiebe  den Koordinatenursprung fuer jedes Atom 
   // in das erste der zwei Bindungsatome
   for (i = 0; i < m->atom_count-1; i++)
@@ -36,7 +36,7 @@ void molekule_rotate(Molecule *m, const Bond b, const double phi)
     
   // 2. Bestimme den Winkel, den die Verbindungslinie zwischen b.last
   // und b.first mit der z-Achse bildet:
-  // TODO: Stimmt das so?
+  // TODO: Stimmt das so? Oder Betrag im Zaehler?
   theta = acos(b.second->pos.x[2] /
             sqrt(vector_scalar_product(b.second->pos, b.second->pos)));
             
