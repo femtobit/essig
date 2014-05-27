@@ -22,12 +22,6 @@ void transform_reset_origin(Molecule *mol)
     (void) mol;
 }
 
-void transform_random_displacement(Molecule *mol, double max_dist)
-{
-    (void) mol;
-    (void) max_dist;
-}
-
 void transform_random_rotation(Molecule *mol, double max_angle)
 {
     (void) mol;
