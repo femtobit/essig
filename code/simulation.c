@@ -43,7 +43,7 @@ void run_simulation(Molecule *mol,
   assert(rotation_translation_ratio >= 0 && rotation_translation_ratio <= 1);
   assert(temperature >= 0);
 
-  const double kT = 1; //temperature * BOLTZMANN_CONSTANT;
+  const double kT = temperature * BOLTZMANN_CONSTANT;
   double energy;
   double last_energy = orca_calculate_energy(mol);
 
