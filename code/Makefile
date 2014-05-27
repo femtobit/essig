@@ -3,7 +3,7 @@ CFLAGS=-std=gnu99 -Wall -Wextra -pedantic
 LD=$(CC)
 LDFLAGS=-lm
 TARGET=essig
-OBJECTS=main.o molecule.o simulation.o mock.o orca_calculate_energy.c
+OBJECTS=main.o molecule.o simulation.o mock.o orca_calculate_energy.o displacement.o vector.o output.o
 
 debug: CFLAGS+=-g
 debug: $(TARGET)
@@ -13,7 +13,7 @@ release: LDFLAGS+=-s
 release: $(TARGET)
 
 $(TARGET): $(OBJECTS)
-	$(LD) $(LDFLAGS) -o $(TARGET) $+
+	$(LD) $(LDFLAGS) -o $@ $+
 
 %.o: %.c $(HEADERS)
 	$(CC) $(CFLAGS) -c -o $@ $<

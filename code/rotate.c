@@ -1,5 +1,6 @@
 /**
- * Here the functions for rotating parts of a molekule
+ * This file is part of essig.
+ * Here functions for rotating parts of a molekule
  * 
  * Author(s):
  *   Michael Hufschmidt <michael@hufschmidt-web.de>
@@ -18,7 +19,7 @@
 // Moleküls um den Winkel φ (gegeben in Radian) 
 // mögliche Werte (-2π ... +2π) und berechnet die
 // neuen Koordinaten aller Atome dieses Moleküls
-void molekule_rotate(Molecule *m, const Bond b, const double phi)
+void molecule_rotate(Molecule *m, const Bond b, const double phi)
 {
   int i = 0;
   double theta = 0;
@@ -50,7 +51,8 @@ void molekule_rotate(Molecule *m, const Bond b, const double phi)
     
   // 5. Drehe Atome oberhalb der Bindungslinie um die z-Achse um phi
   for (i = 0; i < b.right_count-1; i++)
-    b.right[i]->pos = vector_rotate_z(b.right[i]->pos, phi);
+    m->atoms[b.right[i]].pos = vector_rotate_z(
+      m->atoms[b.right[i]].pos, phi);
   
   // 6. Drehe das Koordinatensystem zurueck
   for (i = 0; i < m->atom_count-1; i++)
@@ -62,12 +64,12 @@ void molekule_rotate(Molecule *m, const Bond b, const double phi)
     m->atoms[i].pos = vector_add(m->atoms[i].pos, ursprung);
 }
 
-// Diese Funktion ruft molekule_rotate(...) auf und gibt ein 
+// Diese Funktion ruft molecule_rotate(...) auf und gibt ein 
 // entsprechend modifiziertes Molekül zurück.
-Molecule molekule_rotated(const Molecule *m, const Bond b, const double phi)
+Molecule molecule_rotated(const Molecule *m, const Bond b, const double phi)
 {
   Molecule *mr = molecule_new();
   molecule_deep_copy(mr, m);
-  molekule_rotate(mr, b, phi);
+  molecule_rotate(mr, b, phi);
   return *mr;
 }

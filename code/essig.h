@@ -20,7 +20,7 @@ typedef struct
 {
   int    id;
   Vector pos;
-  char  *element_symbol;
+  char  element_symbol[4];
 } Atom;
 
 /**
@@ -32,13 +32,9 @@ typedef struct
   Atom *first;
   /// Pointer to the second bound atom.
   Atom *second;
-  /// Array of pointers to the atom behind 'first'.
-  /// Stored here as an optimization.
-  Atom **left;
-  size_t left_count;
   /// Array of pointers to the atom behind 'second'.
   /// Stored here as an optimization.
-  Atom **right;
+  size_t *right;
   size_t right_count;
 } Bond;
 

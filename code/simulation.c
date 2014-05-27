@@ -9,6 +9,8 @@
 #include <math.h>
 #include <stdlib.h>
 
+#include "util.h"
+
 static void random_move(Molecule *mol, double max_dist, double max_angle,
                         double rotation_translation_ratio)
 {
@@ -33,6 +35,7 @@ void run_simulation(Molecule *mol,
                     double temperature,
                     bool output_intermediate)
 {
+  UNUSED(molecule_count);
   assert(mol != NULL);
   assert(step_count > 0);
   assert(max_dist > 0);
@@ -40,7 +43,7 @@ void run_simulation(Molecule *mol,
   assert(rotation_translation_ratio >= 0 && rotation_translation_ratio <= 1);
   assert(temperature >= 0);
 
-  const double kT = 1; //temperature * BOLTZMANN_CONSTANT;
+  const double kT = temperature * BOLTZMANN_CONSTANT;
   double energy;
   double last_energy = orca_calculate_energy(mol);
 
@@ -70,15 +73,23 @@ void run_simulation(Molecule *mol,
       }
     }
 
-    // output calculated energy
-    printf("%s\t%d\t%f\t[ΔE=%f]\n",
+    // debug output calculated energy
+    fprintf(stderr, "%s\t%d\t%f\t[ΔE=%f]\n",
            accepted ? "A" : "R",
            i,
            energy,
            energy_delta);
-    if(accepted && i >= drop_count)
+    char *atom_list = molecule_format_atom_list(local_mol);
+    fprintf(stderr, "%s\n", atom_list);
+    free(atom_list);
+
+    if(accepted)
     {
       molecule_deep_copy(mol, local_mol);
+      if(i >= drop_count)
+      {
+        printf("%lf\n", energy);
+      }
 
       if(output_intermediate)
       {
