@@ -74,9 +74,9 @@ void run_simulation(Molecule *mol,
     }
 
     // debug output calculated energy
-    fprintf(stderr, "%s\t%d\t%f\t[ΔE=%f]\n",
-           accepted ? "A" : "R",
+    fprintf(stderr, "[%d] %s\t%f\t[ΔE=%f]\n",
            i,
+           accepted ? "A" : "R",
            energy,
            energy_delta);
     char *atom_list = molecule_format_atom_list(local_mol);
