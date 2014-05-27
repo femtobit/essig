@@ -13,7 +13,7 @@
 
 #define FILE_BASENAME "orca-data"
 #define ORCA_PATH     "/work/public/tcc/orca3.0/orca"
-#define ORCA_KEYWORDS "SP MINIPRINT"
+#define ORCA_KEYWORDS "PM3 MINIPRINT"
 
 static void check_fopen(const FILE *file, const char *filename)
 {
