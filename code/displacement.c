@@ -1,3 +1,10 @@
+/**
+ * This file is part of essig.
+ *
+ * Authors:
+ *  Florian Jochheim<florian.jochheim@gmx.de>
+ *  Jan Fabian Schmid <2schmid@inf>
+ */
 #include<stdlib.h>
 #include"vector.h"
 #include"essig.h"
