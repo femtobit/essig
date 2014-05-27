@@ -71,7 +71,7 @@ void run_simulation(Molecule *mol,
     }
 
     // debug output calculated energy
-    fprintf("%s\t%d\t%f\t[ΔE=%f]\n",
+    fprintf(stderr, "%s\t%d\t%f\t[ΔE=%f]\n",
            accepted ? "A" : "R",
            i,
            energy,
@@ -82,7 +82,7 @@ void run_simulation(Molecule *mol,
       molecule_deep_copy(mol, local_mol);
       if(i >= drop_count)
       {
-        printf("%ld\n", energy);
+        printf("%lf\n", energy);
       }
 
       if(output_intermediate)
