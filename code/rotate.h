@@ -15,6 +15,6 @@
 // neuen Koordinaten aller Atome dieses Moleküls
 void molecule_rotate(Molecule *m, const Bond b, const double phi);
 
-// Diese Funktion ruft molekule_rotate(...) auf und gibt ein entsprechend
+// Diese Funktion ruft molecule_rotate(...) auf und gibt ein entsprechend
 // modifiziertes Molekül zurück.
 Molecule molecule_rotated(const Molecule *m, const Bond b, const double phi);

@@ -63,7 +63,7 @@ void molecule_rotate(Molecule *m, const Bond b, const double phi)
     m->atoms[i].pos = vector_add(m->atoms[i].pos, ursprung);
 }
 
-// Diese Funktion ruft molekule_rotate(...) auf und gibt ein 
+// Diese Funktion ruft molecule_rotate(...) auf und gibt ein 
 // entsprechend modifiziertes Molekül zurück.
 Molecule molecule_rotated(const Molecule *m, const Bond b, const double phi)
 {
