@@ -20,7 +20,7 @@ typedef struct
 {
   int    id;
   Vector pos;
-  char  *element_symbol;
+  char  element_symbol[4];
 } Atom;
 
 /**
