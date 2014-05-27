@@ -53,13 +53,13 @@ char *molecule_format_atom_list(const Molecule *mol)
  */
 void molden_output_molecule(const Molecule *mol)
 {
-   char *list, *firstline;
+   char *list;
    FILE *dat;
    
    dat = fopen("molden_input", "w+");
    assert(dat != NULL);
    list = molecule_format_atom_list(mol);
-   fprintf(dat,"%d\n\n", mol->atom_count);
+   fprintf(dat,"%zd\n\n", mol->atom_count);
    fprintf(dat, "%s", list);
    free(list);
    fclose(dat);

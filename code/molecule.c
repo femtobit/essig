@@ -46,6 +46,7 @@ Molecule *molecule_new(void)
 void molecule_read_from_file(Molecule *mol, FILE *fp)
 {
   // TODO
+  UNUSED(fp);
   Molecule *test = new_test_molecule();
   molecule_deep_copy(mol, test);
   molecule_free(test);

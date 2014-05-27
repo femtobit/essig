@@ -13,7 +13,7 @@ release: LDFLAGS+=-s
 release: $(TARGET)
 
 $(TARGET): $(OBJECTS)
-	$(LD) $(LDFLAGS) -o $(TARGET) $+
+	$(LD) $(LDFLAGS) -o $@ $+
 
 %.o: %.c $(HEADERS)
 	$(CC) $(CFLAGS) -c -o $@ $<
