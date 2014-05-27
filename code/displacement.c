@@ -32,3 +32,11 @@ void transform_random_displacement(Molecule *mol, double max_dist)
   atom_index = drand48()*(mol->atom_count-1);
   mol->atoms[atom_index].pos = vector_add(mol->atoms[atom_index].pos, direction);  
 }
+
+void transform_reset_origin(Molecule *mol)
+{
+  unsigned long i;
+  Vector dist = mol->atoms[0].pos;
+  for(i = 0; i < mol->atom_count; i++)
+    mol->atoms[i].pos = vector_substract(mol->atoms[i].pos, dist);
+}
