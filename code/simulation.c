@@ -76,6 +76,9 @@ void run_simulation(Molecule *mol,
            i,
            energy,
            energy_delta);
+    char *atom_list = molecule_format_atom_list(local_mol);
+    fprintf(stderr, "%s\n", atom_list);
+    free(atom_list);
 
     if(accepted)
     {
