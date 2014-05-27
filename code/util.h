@@ -15,4 +15,6 @@ if((p) == NULL) \
   exit(EXIT_FAILURE); \
 }
 
+#define UNUSED(x) (void) (x);
+
 #endif

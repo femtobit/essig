@@ -9,6 +9,8 @@
 #include <math.h>
 #include <stdlib.h>
 
+#include "util.h"
+
 static void random_move(Molecule *mol, double max_dist, double max_angle,
                         double rotation_translation_ratio)
 {
@@ -33,6 +35,7 @@ void run_simulation(Molecule *mol,
                     double temperature,
                     bool output_intermediate)
 {
+  UNUSED(molecule_count);
   assert(mol != NULL);
   assert(step_count > 0);
   assert(max_dist > 0);
