@@ -58,15 +58,15 @@ double orca_calculate_energy(const Molecule *mol)
         sscanf(energy_string, "%*[^-0-9]%lf", &energy);
     fclose(file);
 
-    remove(FILE_BASENAME ".in");
-    remove(FILE_BASENAME ".engrad");
-    remove(FILE_BASENAME ".gbw");
-    remove(FILE_BASENAME ".ges");
-    remove(FILE_BASENAME ".opt");
-    remove(FILE_BASENAME ".prop");
-    remove(FILE_BASENAME ".trj");
-    remove(FILE_BASENAME ".xyz");
-    remove(FILE_BASENAME ".out");
+//    remove(FILE_BASENAME ".in");
+//    remove(FILE_BASENAME ".engrad");
+//    remove(FILE_BASENAME ".gbw");
+//    remove(FILE_BASENAME ".ges");
+//    remove(FILE_BASENAME ".opt");
+//    remove(FILE_BASENAME ".prop");
+//    remove(FILE_BASENAME ".trj");
+//    remove(FILE_BASENAME ".xyz");
+//    remove(FILE_BASENAME ".out");
 
     return energy;
 }
