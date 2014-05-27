@@ -51,7 +51,8 @@ void molecule_rotate(Molecule *m, const Bond b, const double phi)
     
   // 5. Drehe Atome oberhalb der Bindungslinie um die z-Achse um phi
   for (i = 0; i < b.right_count-1; i++)
-    b.right[i]->pos = vector_rotate_z(b.right[i]->pos, phi);
+    m->atoms[b.right[i]].pos = vector_rotate_z(
+      m->atoms[b.right[i]].pos, phi);
   
   // 6. Drehe das Koordinatensystem zurueck
   for (i = 0; i < m->atom_count-1; i++)
