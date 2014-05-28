@@ -21,7 +21,7 @@
 // neuen Koordinaten aller Atome dieses Moleküls
 void molecule_rotate(Molecule *m, const Bond b, const double phi)
 {
-  int i = 0;
+  unsigned long  i = 0;
   double theta = 0;
   Vector ursprung;
   Matrix Rot, Rot_Inv;
