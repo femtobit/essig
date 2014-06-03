@@ -25,7 +25,7 @@ char *molecule_format_atom_list(const Molecule *mol)
   Atom *atom;
 
   atom_count = mol->atom_count;
-  resultS = malloc((1 + atom_count * (3 * 11 + 1 * 2 + 1 * 1)) * sizeof *resultS);
+  resultS = malloc((1 + atom_count * (3 * 14 + 1 * 2 + 1 * 1)) * sizeof *resultS);
   /* 1 end of string and 3 coordinates, 1 element symbol and 1 end of line per atom */
   resultS[0] = '\0';
 
@@ -36,10 +36,10 @@ char *molecule_format_atom_list(const Molecule *mol)
     resultS = strcat(resultS, atom->element_symbol);
     for(j = 0; j < 3; ++j)
     {
-      temp = malloc(11 * sizeof *temp);
+      temp = malloc(14 * sizeof *temp);
       /* 11 characters for one coordinate should be enough(?) */
       assert(temp != NULL);
-      sprintf(temp, "  %.3f", atom->pos.x[j]);
+      sprintf(temp, "   %*.5f", 11, atom->pos.x[j]);
       resultS = strcat(resultS, temp);
       free(temp);
     }
@@ -56,11 +56,15 @@ void molden_output_molecule(const Molecule *mol)
    char *list;
    FILE *dat;
    
-   dat = fopen("molden_input", "w+");
+   dat = fopen("molden_input.xyz", "w+");
    assert(dat != NULL);
    list = molecule_format_atom_list(mol);
-   fprintf(dat,"%zd\n\n", mol->atom_count);
-   fprintf(dat, "%s", list);
+   fprintf(dat,"%ld\n\n", mol->atom_count);
+   fprintf(dat, "%s", list);   
+   
    free(list);
    fclose(dat);
+   
+   system("/work/public/tcc/molden molden_input.xyz");
 }
+
