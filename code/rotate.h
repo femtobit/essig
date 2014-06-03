@@ -7,6 +7,11 @@
  */
 
 #include "essig.h"
+
+// Choses a random bound from the molekule *m and rotates 
+// an angle betweeb 0 and max_angle 
+void transform_random_rotation(Molecule *mol, double max_angle);
+
 // Diese Funktion rotiert Teile eines Moleküls m
 // um eine Achse, gegeben durch eine Bindung b
 // (= Verbindungslinie r zweier Atome) dieses
