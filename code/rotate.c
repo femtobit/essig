@@ -7,18 +7,22 @@
  */
 
 #include <assert.h>
+#include <stdlib.h>
 #include <math.h>
 #include "essig.h"
 #include "vector.h"
 #include "rotate.h"
 
-
-// Choses a random bound from the molekule *m and rotates 
-// an angle betweeb 0 and max_angle 
+// Choses a random bound from the molekule *m and rotate 
+// by an angle between 0 and max_angle. Actual work is done by
+// calling molecule_rotate(...)
 void transform_random_rotation(Molecule *mol, double max_angle)
 {
-    (void) mol;
-    (void) max_angle;
+  size_t bond_index;
+  double phi = 0;
+  bond_index = drand48() * mol->bond_count;
+  phi = drand48() * max_angle;
+  molecule_rotate(mol, mol->bonds[bond_index], phi);
 }
 
 // Diese Funktion rotiert Teile eines Moleküls m
@@ -34,9 +38,8 @@ void molecule_rotate(Molecule *m, const Bond b, const double phi)
   Vector ursprung;
   Matrix Rot, Rot_Inv;
   assert(m->atoms != NULL);
-  assert(b.first != NULL);
   assert(fabs(phi) < 100.0);
-  ursprung = b.first->pos;
+  ursprung = m->atoms[b.first].pos;
   
   // 1. Verschiebe  den Koordinatenursprung fuer jedes Atom 
   // in das erste der zwei Bindungsatome
@@ -46,8 +49,9 @@ void molecule_rotate(Molecule *m, const Bond b, const double phi)
   // 2. Bestimme den Winkel, den die Verbindungslinie zwischen b.last
   // und b.first mit der z-Achse bildet:
   // TODO: Stimmt das so? Oder Betrag im Zaehler?
-  theta = acos(b.second->pos.x[2] /
-            sqrt(vector_scalar_product(b.second->pos, b.second->pos)));
+  theta = acos(m->atoms[b.second].pos.x[2] /
+          sqrt(vector_scalar_product(m->atoms[b.second].pos,
+                                       m->atoms[b.second].pos)));
             
   // 3. Berechne Rotatonsmatritzen
   Rot = euler_rotate(0, theta, 0);
