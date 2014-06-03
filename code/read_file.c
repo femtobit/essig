@@ -7,7 +7,7 @@
 
 void build_rights(Bond *bonds, size_t start_bond, size_t start_atom, size_t atom_count, size_t bond_count)
 {
-  size_t i;
+  size_t i, j, first, second, right_count = 0;
   bool *bools, changed = true;
   bools = calloc(atom_count, sizeof(*bools));
   assert(bools != NULL);
@@ -16,13 +16,40 @@ void build_rights(Bond *bonds, size_t start_bond, size_t start_atom, size_t atom
   while ( changed == true)
   {
     changed = false;
-    
+    /*In everz run, every atom that is rechable from a currently selected atom
+     * is now selected*/
     for (i = 0; i < bond_count; i++)
     {
+      first = bonds[i].first;
+      second = bonds[i].second;
       if ( i == start_bond)
-        continue;
+        continue;        
+      else if(bools[first] && !bools[second])
+      {
+        changed = true;
+        bools[second] = true;
+        right_count++;
+      }
+      else if(!bools[first] && bools[second])
+      {
+        changed = true;
+        bools[first] = true;
+        right_count++;
+      }
     }
   }
+  /*every atom that has been reached is saved in rights array of the bond
+   * we are looking at*/
+  bonds[start_bond].right = malloc(sizeof(size_t)*right_count);
+  for(i=0, j= 0; i<bond_count;i++)
+  {
+    if(bools[i] && i != start_atom)
+    {
+      bonds[start_bond].right[j] = i;
+      j++;
+    }
+  }
+  bonds[start_bond].right_count = right_count;
   free(bools);
 } 
 
@@ -99,6 +126,8 @@ void molecule_read_from_file(Molecule *mol, FILE *fp)
     fprintf(stderr,"Charge missing or wrong format\n");
     exit(EXIT_FAILURE);
   }
+  /*build right array for every bond that we have
+   * */
   for ( i = 0; i < bonds_count; i++)
   {
     build_rights(bonds, i, bonds[i].second, atom_count, bonds_count); 
@@ -110,7 +139,19 @@ void molecule_read_from_file(Molecule *mol, FILE *fp)
   mol->charge = charge;
   free(buffer);
 }
-
+void print_rights(Molecule *mol)
+{
+  size_t i,j;
+  printf("%lu\n", mol->bond_count);
+  for(i = 0; i < mol->bond_count; i++)
+  {
+    for(j = 0; j < mol->bonds[i].right_count;j++)
+    {
+      printf("In %lu -th bond :\nfirst is: %lu\n second is: %lu\n %lu -th right is: %lu\n", i,mol->bonds[i].first,mol->bonds[i].second,j, mol->bonds[i].right[j]);
+    }
+  }
+  
+}
 int main(int argc, char *argv[])
 {
   Molecule *mol = malloc(sizeof(Molecule));
@@ -121,6 +162,7 @@ int main(int argc, char *argv[])
   molecule_read_from_file(mol, file);
   fclose(file);
   printf(molecule_format_atom_list(mol));
+  print_rights(mol);
   free(mol->atoms);
   free(mol->bonds);
   free(mol);
