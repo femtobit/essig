@@ -8,8 +8,9 @@
 
 #include "essig.h"
 
-// Choses a random bound from the molekule *m and rotates 
-// an angle betweeb 0 and max_angle 
+// Choses a random bound from the molekule *m and rotate 
+// by an angle between 0 and max_angle. Actual work is done by
+// calling molecule_rotate(...)
 void transform_random_rotation(Molecule *mol, double max_angle);
 
 // Diese Funktion rotiert Teile eines Moleküls m

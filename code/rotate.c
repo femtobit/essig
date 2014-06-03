@@ -7,18 +7,22 @@
  */
 
 #include <assert.h>
+#include <stdlib.h>
 #include <math.h>
 #include "essig.h"
 #include "vector.h"
 #include "rotate.h"
 
-
-// Choses a random bound from the molekule *m and rotates 
-// an angle betweeb 0 and max_angle 
+// Choses a random bound from the molekule *m and rotate 
+// by an angle between 0 and max_angle. Actual work is done by
+// calling molecule_rotate(...)
 void transform_random_rotation(Molecule *mol, double max_angle)
 {
-    (void) mol;
-    (void) max_angle;
+  size_t bond_index;
+  double phi = 0;
+  bond_index = drand48() * mol->bond_count;
+  phi = drand48() * max_angle;
+  molecule_rotate(mol, mol->bonds[bond_index], phi);
 }
 
 // Diese Funktion rotiert Teile eines Moleküls m
