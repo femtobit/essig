@@ -20,7 +20,7 @@ typedef struct
 {
   int    id;
   Vector pos;
-  char  element_symbol[4];
+  char   element_symbol[4];
 } Atom;
 
 /**
@@ -28,11 +28,11 @@ typedef struct
  */
 typedef struct
 {
-  /// Pointer to the first bound atom.
-  Atom *first;
-  /// Pointer to the second bound atom.
-  Atom *second;
-  /// Array of pointers to the atom behind 'second'.
+  /// Index of the first bound atom.
+  size_t first;
+  /// Index of the second bound atom.
+  size_t second;
+  /// Array of indices of the atoms behind 'second'.
   /// Stored here as an optimization.
   size_t *right;
   size_t right_count;
@@ -87,7 +87,7 @@ void run_simulation(Molecule *mol,
 void transform_reset_origin(Molecule *mol);
 
 /**
- * Move a radomly selected atom of @p mol b a
+ * Move a radomly selected atom of @p mol by a
  * random value between 0 and @p max_dist.
  */
 void transform_random_displacement(Molecule *mol, double max_dist);
