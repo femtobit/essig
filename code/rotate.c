@@ -34,9 +34,8 @@ void molecule_rotate(Molecule *m, const Bond b, const double phi)
   Vector ursprung;
   Matrix Rot, Rot_Inv;
   assert(m->atoms != NULL);
-  assert(b.first != NULL);
   assert(fabs(phi) < 100.0);
-  ursprung = b.first->pos;
+  ursprung = m->atoms[b.first].pos;
   
   // 1. Verschiebe  den Koordinatenursprung fuer jedes Atom 
   // in das erste der zwei Bindungsatome
@@ -46,8 +45,9 @@ void molecule_rotate(Molecule *m, const Bond b, const double phi)
   // 2. Bestimme den Winkel, den die Verbindungslinie zwischen b.last
   // und b.first mit der z-Achse bildet:
   // TODO: Stimmt das so? Oder Betrag im Zaehler?
-  theta = acos(b.second->pos.x[2] /
-            sqrt(vector_scalar_product(b.second->pos, b.second->pos)));
+  theta = acos(m->atoms[b.second].pos.x[2] /
+          sqrt(vector_scalar_product(m->atoms[b.second].pos,
+                                       m->atoms[b.second].pos)));
             
   // 3. Berechne Rotatonsmatritzen
   Rot = euler_rotate(0, theta, 0);
