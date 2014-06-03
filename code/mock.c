@@ -12,11 +12,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void transform_reset_origin(Molecule *mol)
-{
-    (void) mol;
-}
-
 void transform_random_rotation(Molecule *mol, double max_angle)
 {
     (void) mol;
