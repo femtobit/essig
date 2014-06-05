@@ -62,6 +62,7 @@ void run_simulation(Molecule *mol,
 
     if(energy_delta < 0)
     {
+      DEBUG_PRINTF("ΔE < 0, accepted\n")
       accepted = true;
     }
     else
@@ -69,6 +70,7 @@ void run_simulation(Molecule *mol,
       double rand = drand48();
       if(rand <= exp(-energy_delta / kT))
       {
+        DEBUG_PRINTF("ΔE >= 0, accepted anyway\n");
         accepted = true;
       }
     }
