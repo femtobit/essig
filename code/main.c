@@ -14,8 +14,8 @@
 
 static const char *usage = "Usage: %s <input>\n";
 
-static const unsigned int default_step_count = 10000;
-static const unsigned int default_drop_count = 100;
+static const unsigned int default_step_count = 1000000000;
+static const unsigned int default_drop_count = 10000;
 static const double default_max_dist  = 0.05; // Å
 static const double default_max_angle = 1; // rad
 static const double default_rotation_translation_ratio = 1;
@@ -41,3 +41,4 @@ int main(int argc, char *argv[])
   molecule_free(molecule);
   return EXIT_SUCCESS;
 }
+
