@@ -64,7 +64,5 @@ void molden_output_molecule(const Molecule *mol)
    
    free(list);
    fclose(dat);
-   
-   system("/work/public/tcc/molden molden_input.xyz");
 }
 
