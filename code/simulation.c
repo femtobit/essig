@@ -88,6 +88,7 @@ void run_simulation(Molecule *mol,
     if(accepted)
     {
       molecule_deep_copy(mol, local_mol);
+      last_energy = energy;
       if(i >= drop_count)
       {
         printf("%lf\n", energy);
