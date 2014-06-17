@@ -19,8 +19,8 @@
 static const char *usage = "Usage: %s <input>\n";
 
 static const unsigned int default_step_count = 1000000000;
-static const unsigned int default_drop_count = 10000;
-static const double default_max_dist  = 0.05; // Å
+static const unsigned int default_drop_count = 100000;
+static const double default_max_dist  = 0.01; // Å
 static const double default_max_angle = 1; // rad
 static const double default_rotation_translation_ratio = 1;
 static const double default_temperature = 293.2; // K
@@ -41,6 +41,11 @@ static long int parse_number(const char *src)
   return val;
 }
 
+static double parse_double(const char *src)
+{
+  return strtod(src, NULL); // FIXME handle errors
+}
+
 int main(int argc, char *argv[])
 {
   int opt;
@@ -48,8 +53,8 @@ int main(int argc, char *argv[])
   char *filename = "essig_protoniert.mol";
   unsigned int step_count = default_step_count;
   unsigned int drop_count = default_drop_count;
-  unsigned int max_dist = default_max_dist;
-  unsigned int max_angle = default_max_angle;
+  double max_dist = default_max_dist;
+  double max_angle = default_max_angle;
 
   while((opt = getopt(argc, argv, "n:d:D:R:")) != -1)
   {
@@ -64,11 +69,11 @@ int main(int argc, char *argv[])
         assert(drop_count > 0);
         break;
       case 'D':
-        max_dist = parse_number(optarg);
+        max_dist = parse_double(optarg);
         assert(max_dist > 0);
         break;
       case 'R':
-        max_angle = parse_number(optarg);
+        max_angle = parse_double(optarg);
         assert(max_angle > 0);
         break;
       default:
@@ -88,6 +93,27 @@ int main(int argc, char *argv[])
   }
   molecule_read_from_file(molecule, molecule_input);
   fclose(molecule_input);
+
+  const time_t t = time(NULL);
+  struct tm *td = localtime(&t);
+  char str_time[100];
+  strftime(str_time, sizeof str_time, "%Y-%m-%d %H:%M:%S", td);
+
+  DEBUG_PRINTF("Starting simulation at %s:\n"
+               "  step count =\t%u\n"
+               "  drop_count =\t%u\n"
+               "  max_dist =\t%f Å"
+               "  max_angle =\t%f rad\n"
+               "  RT ratio =\t%f\n"
+               "  temperature )\t%f K\n",
+               str_time,
+               step_count,
+               drop_count,
+               max_dist,
+               max_angle,
+               default_rotation_translation_ratio,
+               default_temperature);
+
   run_simulation(molecule, 1, step_count, drop_count, max_dist, max_angle,
                  default_rotation_translation_ratio,default_temperature, true);
   
