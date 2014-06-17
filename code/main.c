@@ -100,12 +100,12 @@ int main(int argc, char *argv[])
   strftime(str_time, sizeof str_time, "%Y-%m-%d %H:%M:%S", td);
 
   DEBUG_PRINTF("Starting simulation at %s:\n"
-               "  step count =\t%u\n"
-               "  drop_count =\t%u\n"
-               "  max_dist =\t%f Å"
-               "  max_angle =\t%f rad\n"
-               "  RT ratio =\t%f\n"
-               "  temperature )\t%f K\n",
+               "  step count\t= %u\n"
+               "  drop_count\t= %u\n"
+               "  max_dist\t= %f Å\n"
+               "  max_angle\t= %f rad\n"
+               "  RT ratio\t= %f\n"
+               "  temperature\t= %f K\n",
                str_time,
                step_count,
                drop_count,
