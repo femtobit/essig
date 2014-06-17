@@ -101,7 +101,7 @@ void molecule_read_from_file(Molecule *mol, FILE *fp)
     if(3 != sscanf(&token[i+1],
                     "%lf\t%lf\t%lf",&(pos.x[0]),&(pos.x[1]), &(pos.x[2])))
     {
-      fprintf(stderr, "Koordinates in wrong format for %lu\n", atom_count-1);
+      fprintf(stderr, "Koordinates in wrong format for %zu\n", atom_count-1);
       exit(EXIT_FAILURE);
     }
     
@@ -117,7 +117,7 @@ void molecule_read_from_file(Molecule *mol, FILE *fp)
     if(bonds_count != 1)
       bonds = realloc(bonds, sizeof(*bonds)*bonds_count);
     
-    if(2 != sscanf(token,"%lu-%lu", &first, &second))
+    if(2 != sscanf(token,"%zu-%zu", &first, &second))
     {
       fprintf(stderr, "Error reading file. Bonds not in correct format\n");
       exit(EXIT_FAILURE);
