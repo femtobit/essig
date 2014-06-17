@@ -156,7 +156,7 @@ void molecule_read_from_file(Molecule *mol, FILE *fp)
 }
 /*
  * Debug Funktionen :
- * */
+ * 
 void print_rights(Molecule *mol)
 {
   size_t i,j;
@@ -188,3 +188,4 @@ int main(int argc, char *argv[])
   free(mol);
   return EXIT_SUCCESS;
 }
+*/
