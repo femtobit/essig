@@ -1,3 +1,10 @@
+/**
+ * This file is part of essig.
+ *
+ * Authors:
+ *  Florian Jochheim<florian.jochheim@gmx.de>
+ *  Jan Fabian Schmid <2schmid@inf>
+ */
 #include "essig.h"
 #include "vector.h"
 #include <stdlib.h>
@@ -13,10 +20,10 @@ void build_rights(Bond *bonds, size_t start_bond, size_t start_atom, size_t atom
   assert(bools != NULL);
   bools[start_atom] = true;
   
-  while ( changed == true)
+  while (changed == true)
   {
     changed = false;
-    /*In everz run, every atom that is rechable from a currently selected atom
+    /*In every run, every atom that is rechable from a currently selected atom
      * is now selected*/
     for (i = 0; i < bond_count; i++)
     {
@@ -41,7 +48,7 @@ void build_rights(Bond *bonds, size_t start_bond, size_t start_atom, size_t atom
   /*every atom that has been reached is saved in rights array of the bond
    * we are looking at*/
   bonds[start_bond].right = malloc(sizeof(size_t)*right_count);
-  for(i=0, j= 0; i<bond_count;i++)
+  for(i=0, j= 0; i<atom_count;i++)
   {
     if(bools[i] && i != start_atom)
     {
@@ -131,6 +138,14 @@ void molecule_read_from_file(Molecule *mol, FILE *fp)
   for ( i = 0; i < bonds_count; i++)
   {
     build_rights(bonds, i, bonds[i].second, atom_count, bonds_count); 
+    if(bonds[i].right_count == 0 || bonds[i].right_count == atom_count - 2)
+    {
+      bonds[i].rotate = false;
+    }
+    else
+    {
+      bonds[i].rotate = true;
+    }
   }
   mol->atoms = atoms;
   mol->bonds = bonds;
@@ -139,15 +154,19 @@ void molecule_read_from_file(Molecule *mol, FILE *fp)
   mol->charge = charge;
   free(buffer);
 }
+/*
+ * Debug Funktionen :
+ * */
 void print_rights(Molecule *mol)
 {
   size_t i,j;
-  printf("%lu\n", mol->bond_count);
+  printf("bond count: %lu\n", mol->bond_count);
   for(i = 0; i < mol->bond_count; i++)
   {
+    printf("%lu -th bond: first: %lu, second: %lu rotate is %s\n", i+1, mol->bonds[i].first+1, mol->bonds[i].second+1,mol->bonds[i].rotate ? "true":"false");
     for(j = 0; j < mol->bonds[i].right_count;j++)
     {
-      printf("In %lu -th bond :\nfirst is: %lu\n second is: %lu\n %lu -th right is: %lu\n", i,mol->bonds[i].first,mol->bonds[i].second,j, mol->bonds[i].right[j]);
+      printf("In %lu -th bond :\nfirst is: %lu\n second is: %lu\n %lu -th right is: %lu\n", i+1,mol->bonds[i].first+1,mol->bonds[i].second+1,j+1, mol->bonds[i].right[j]+1);
     }
   }
   
@@ -162,6 +181,7 @@ int main(int argc, char *argv[])
   molecule_read_from_file(mol, file);
   fclose(file);
   printf(molecule_format_atom_list(mol));
+  printf("charge: %d\n", mol->charge);
   print_rights(mol);
   free(mol->atoms);
   free(mol->bonds);
