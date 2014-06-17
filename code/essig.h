@@ -36,6 +36,7 @@ typedef struct
   /// Stored here as an optimization.
   size_t *right;
   size_t right_count;
+  bool rotate;
 } Bond;
 
 typedef struct
@@ -49,6 +50,7 @@ typedef struct
   /// Length of 'bonds'.
   size_t bond_count;
   int charge;
+
 } Molecule;
 
 /**
