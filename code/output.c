@@ -59,7 +59,7 @@ void molden_output_molecule(const Molecule *mol)
    dat = fopen("molden_input.xyz", "w+");
    assert(dat != NULL);
    list = molecule_format_atom_list(mol);
-   fprintf(dat,"%ld\n\n", mol->atom_count);
+   fprintf(dat,"%zu\n\n", mol->atom_count);
    fprintf(dat, "%s", list);   
    
    free(list);
