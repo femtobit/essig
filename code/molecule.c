@@ -11,7 +11,7 @@
 #include <string.h>
 
 #include "util.h"
-
+/*
 static Molecule *new_test_molecule()
 {
   Molecule *mol = malloc(sizeof *mol);
@@ -34,7 +34,7 @@ static Molecule *new_test_molecule()
   mol->charge = 0;
 
   return mol;
-}
+}*/
 
 Molecule *molecule_new(void)
 {
@@ -42,7 +42,7 @@ Molecule *molecule_new(void)
   CHECK_ALLOC(mol);
   return mol;
 }
-
+/*
 void molecule_read_from_file(Molecule *mol, FILE *fp)
 {
   // TODO
@@ -50,7 +50,7 @@ void molecule_read_from_file(Molecule *mol, FILE *fp)
   Molecule *test = new_test_molecule();
   molecule_deep_copy(mol, test);
   molecule_free(test);
-}
+}*/
 
 void molecule_free(Molecule *mol)
 {

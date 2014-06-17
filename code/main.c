@@ -44,6 +44,8 @@ static long int parse_number(const char *src)
 int main(int argc, char *argv[])
 {
   int opt;
+  FILE *molecule_input;
+  char *filename = "essig_protoniert.mol";
   unsigned int step_count = default_step_count;
   unsigned int drop_count = default_drop_count;
   while((opt = getopt(argc, argv, "n:d:")) != -1)
@@ -65,8 +67,14 @@ int main(int argc, char *argv[])
   srand48(time(NULL));
 
   Molecule *molecule = molecule_new();
-  molecule_read_from_file(molecule, NULL);
-
+  molecule_input = fopen(filename, "r");
+  if(molecule_input == NULL)
+  {
+    fprintf(stderr,"Could not open file : %s\n", filename);
+    exit(EXIT_FAILURE);
+  }
+  molecule_read_from_file(molecule, molecule_input);
+  fclose(molecule_input);
   run_simulation(molecule, 1, step_count, drop_count,
                  default_max_dist, default_max_angle, default_rotation_translation_ratio,
                  default_temperature, true);
