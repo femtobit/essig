@@ -6,7 +6,7 @@
 *   Robert Hartmann <2hartman@inf>
 */
 
-/* To think about: What is the maximum size of coordinates? (~line 25)*/
+/* To think about: What is the maximum size of coordinates? (~line 28)*/
 
 #include <stdio.h>
 #include <string.h>
@@ -49,7 +49,7 @@ char *molecule_format_atom_list(const Molecule *mol)
 }
 
 /**
- * Returns a file of the molecule atoms molden can work with.
+ * Creates a file of the molecule molden can work with and calls Molden with it.
  */
 void molden_output_molecule(const Molecule *mol)
 {
