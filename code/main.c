@@ -48,7 +48,10 @@ int main(int argc, char *argv[])
   char *filename = "essig_protoniert.mol";
   unsigned int step_count = default_step_count;
   unsigned int drop_count = default_drop_count;
-  while((opt = getopt(argc, argv, "n:d:")) != -1)
+  unsigned int max_dist = default_max_dist;
+  unsigned int max_angle = default_max_angle;
+
+  while((opt = getopt(argc, argv, "n:d:D:R:")) != -1)
   {
     switch(opt)
     {
@@ -58,6 +61,15 @@ int main(int argc, char *argv[])
         break;
       case 'd':
         drop_count = parse_number(optarg);
+        assert(drop_count > 0);
+        break;
+      case 'D':
+        max_dist = parse_number(optarg);
+        assert(max_dist > 0);
+        break;
+      case 'R':
+        max_angle = parse_number(optarg);
+        assert(max_angle > 0);
         break;
       default:
         FAIL(usage, argv[0]);
@@ -67,6 +79,7 @@ int main(int argc, char *argv[])
   srand48(time(NULL));
 
   Molecule *molecule = molecule_new();
+
   molecule_input = fopen(filename, "r");
   if(molecule_input == NULL)
   {
@@ -75,10 +88,9 @@ int main(int argc, char *argv[])
   }
   molecule_read_from_file(molecule, molecule_input);
   fclose(molecule_input);
-  run_simulation(molecule, 1, step_count, drop_count,
-                 default_max_dist, default_max_angle, default_rotation_translation_ratio,
-                 default_temperature, true);
-
+  run_simulation(molecule, 1, step_count, drop_count, max_dist, max_angle,
+                 default_rotation_translation_ratio,default_temperature, true);
+  
   molecule_free(molecule);
   return EXIT_SUCCESS;
 }
