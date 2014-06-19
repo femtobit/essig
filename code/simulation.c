@@ -76,7 +76,7 @@ void run_simulation(Molecule *mol,
     }
 
     // debug output calculated energy
-    fprintf(stderr, "[%d] %s\t%f\t[ΔE=%f]\n",
+    fprintf(stderr, "[%d] %s\t%f\t[ΔE=%e]\n",
            i,
            accepted ? "A" : "R",
            energy,

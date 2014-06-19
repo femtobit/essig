@@ -45,7 +45,7 @@ int main(int argc, char *argv[])
   unsigned int step_count = 1000000000;
   unsigned int drop_count = 100000;
   double rotation_translation_ratio = 1.0;
-  double max_dist     = 0.01;  // Å
+  double max_dist     = 0.25;  // Å
   double max_angle    = 1 ;    // rad
   double temperature  = 293.2; // K
   const char *filename = "essig_protoniert.mol";
@@ -134,7 +134,7 @@ int main(int argc, char *argv[])
 
   run_simulation(molecule, 1, step_count, drop_count, max_dist, max_angle,
                  rotation_translation_ratio, temperature, true);
-  
+
   molecule_free(molecule);
   return EXIT_SUCCESS;
 }
