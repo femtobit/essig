@@ -102,7 +102,14 @@ int main(int argc, char *argv[])
   char str_time[100];
   strftime(str_time, sizeof str_time, "%Y-%m-%d %H:%M:%S", td);
 
-  DEBUG_PRINTF("Starting simulation at %s:\n"
+  errno = 0;
+  char hostname[100];
+  if(gethostname(hostname, 100) != 0)
+  {
+    strcpy(hostname, "unknown host");
+  }
+
+  DEBUG_PRINTF("Starting simulation at %s on %s:\n"
                "  step count\t= %u\n"
                "  drop_count\t= %u\n"
                "  max_dist\t= %f Å\n"
@@ -110,6 +117,7 @@ int main(int argc, char *argv[])
                "  RT ratio\t= %f\n"
                "  temperature\t= %f K\n",
                str_time,
+               hostname,
                step_count,
                drop_count,
                max_dist,
