@@ -19,13 +19,6 @@
 
 static const char *usage = "Usage: %s <input>\n";
 
-static const unsigned int default_step_count = 1000000000;
-static const unsigned int default_drop_count = 100000;
-static const double default_max_dist  = 0.01; // Å
-static const double default_max_angle = 1; // rad
-static const double default_rotation_translation_ratio = 1;
-static const double default_temperature = 293.2; // K
-
 static long int parse_number(const char *src)
 {
   long int val;
@@ -49,17 +42,16 @@ static double parse_double(const char *src)
 
 int main(int argc, char *argv[])
 {
-  int opt;
-  FILE *molecule_input;
-  char *filename = "essig_protoniert.mol";
-  unsigned int step_count = default_step_count;
-  unsigned int drop_count = default_drop_count;
-  double max_dist = default_max_dist;
-  double max_angle = default_max_angle;
-  double rotation_translation_ratio = default_rotation_translation_ratio;
-  double temperature = default_temperature;
+  unsigned int step_count = 1000000000;
+  unsigned int drop_count = 100000;
+  double rotation_translation_ratio = 1.0;
+  double max_dist     = 0.01;  // Å
+  double max_angle    = 1 ;    // rad
+  double temperature  = 293.2; // K
+  const char *filename = "essig_protoniert.mol";
 
-  while((opt = getopt(argc, argv, "n:d:D:A:T:R:")) != -1)
+  int opt;
+  while((opt = getopt(argc, argv, "n:d:D:A:T:R:f:")) != -1)
   {
     switch(opt)
     {
@@ -92,6 +84,9 @@ int main(int argc, char *argv[])
         FAIL_UNLESS(rotation_translation_ratio >= 0.0
                     && rotation_translation_ratio <= 1.0);
         break;
+      case 'f':
+        filename = optarg;
+        break;
       default:
         FAIL(usage, argv[0]);
     }
@@ -99,23 +94,22 @@ int main(int argc, char *argv[])
 
   srand48(time(NULL));
 
-  Molecule *molecule = molecule_new();
-
+  FILE *molecule_input;
   molecule_input = fopen(filename, "r");
   if(molecule_input == NULL)
   {
-    fprintf(stderr,"Could not open file : %s\n", filename);
-    exit(EXIT_FAILURE);
+    FAIL("Error: Could not open file '%s'\n", filename);
   }
+
+  Molecule *molecule = molecule_new();
   molecule_read_from_file(molecule, molecule_input);
   fclose(molecule_input);
 
   const time_t t = time(NULL);
   struct tm *td = localtime(&t);
-  char str_time[100];
-  strftime(str_time, sizeof str_time, "%Y-%m-%d %H:%M:%S", td);
+  char time_string[100];
+  strftime(time_string, sizeof time_string, "%Y-%m-%d %H:%M:%S", td);
 
-  errno = 0;
   char hostname[100];
   if(gethostname(hostname, 100) != 0)
   {
@@ -129,7 +123,7 @@ int main(int argc, char *argv[])
                "  max_angle\t= %f rad\n"
                "  RT ratio\t= %f\n"
                "  temperature\t= %f K\n",
-               str_time,
+               time_string,
                hostname,
                step_count,
                drop_count,
@@ -139,7 +133,7 @@ int main(int argc, char *argv[])
                temperature);
 
   run_simulation(molecule, 1, step_count, drop_count, max_dist, max_angle,
-                 default_rotation_translation_ratio,default_temperature, true);
+                 rotation_translation_ratio, temperature, true);
   
   molecule_free(molecule);
   return EXIT_SUCCESS;
