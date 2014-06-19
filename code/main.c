@@ -5,13 +5,14 @@
  *  Damian Hofmann <2hofmann@inf>
  */
 #include <errno.h>
+#include <limits.h>
+#include <math.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
 #include <unistd.h>
-#include <limits.h>
 
 #include "essig.h"
 #include "util.h"
@@ -62,19 +63,21 @@ int main(int argc, char *argv[])
     {
       case 'n':
         step_count = parse_number(optarg);
-        assert(step_count > 0);
+        FAIL_UNLESS(step_count > 0);
         break;
       case 'd':
         drop_count = parse_number(optarg);
-        assert(drop_count > 0);
+        FAIL_UNLESS(drop_count > 0);
         break;
       case 'D':
         max_dist = parse_double(optarg);
-        assert(max_dist > 0);
+        FAIL_UNLESS(max_dist > 0);
+        FAIL_UNLESS(max_dist < INFINITY);
         break;
       case 'R':
         max_angle = parse_double(optarg);
-        assert(max_angle > 0);
+        FAIL_UNLESS(max_angle > 0);
+        FAIL_UNLESS(max_angle < INFINITY);
         break;
       default:
         FAIL(usage, argv[0]);
@@ -120,4 +123,3 @@ int main(int argc, char *argv[])
   molecule_free(molecule);
   return EXIT_SUCCESS;
 }
-

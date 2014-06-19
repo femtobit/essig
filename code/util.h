@@ -17,6 +17,12 @@
     FAIL("Error: Could not allocate memory (at %s:%d)\n", __FILE__, __LINE__); \
   }
 
+#define FAIL_UNLESS(cond) \
+  if(!(cond)) \
+  { \
+    FAIL("Error: Check '" #cond "' failed\n"); \
+  }
+
 #ifndef NDEBUG
 #define DEBUG_PRINTF(...) fprintf(stderr, "DEBUG:\t" __VA_ARGS__);
 #else
