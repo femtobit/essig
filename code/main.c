@@ -56,8 +56,10 @@ int main(int argc, char *argv[])
   unsigned int drop_count = default_drop_count;
   double max_dist = default_max_dist;
   double max_angle = default_max_angle;
+  double rotation_translation_ratio = default_rotation_translation_ratio;
+  double temperature = default_temperature;
 
-  while((opt = getopt(argc, argv, "n:d:D:R:")) != -1)
+  while((opt = getopt(argc, argv, "n:d:D:A:T:R:")) != -1)
   {
     switch(opt)
     {
@@ -74,10 +76,21 @@ int main(int argc, char *argv[])
         FAIL_UNLESS(max_dist > 0);
         FAIL_UNLESS(max_dist < INFINITY);
         break;
-      case 'R':
+      case 'A':
         max_angle = parse_double(optarg);
         FAIL_UNLESS(max_angle > 0);
         FAIL_UNLESS(max_angle < INFINITY);
+        break;
+      case 'T':
+        temperature = parse_double(optarg);
+        FAIL_UNLESS(temperature != INFINITY
+                    && temperature != -INFINITY
+                    && temperature != NAN);
+        break;
+      case 'R':
+        rotation_translation_ratio = parse_double(optarg);
+        FAIL_UNLESS(rotation_translation_ratio >= 0.0
+                    && rotation_translation_ratio <= 1.0);
         break;
       default:
         FAIL(usage, argv[0]);
@@ -122,8 +135,8 @@ int main(int argc, char *argv[])
                drop_count,
                max_dist,
                max_angle,
-               default_rotation_translation_ratio,
-               default_temperature);
+               rotation_translation_ratio,
+               temperature);
 
   run_simulation(molecule, 1, step_count, drop_count, max_dist, max_angle,
                  default_rotation_translation_ratio,default_temperature, true);
