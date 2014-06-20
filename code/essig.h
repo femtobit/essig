@@ -14,7 +14,7 @@
 
 #include "vector.h"
 
-#define BOLTZMANN_CONSTANT 1.3806488e-23 // J/K
+#define BOLTZMANN_CONSTANT 3.1668114e-6 // Eh/K
 
 typedef struct
 {

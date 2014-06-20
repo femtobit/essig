@@ -61,5 +61,5 @@ double orca_calculate_energy(const Molecule *mol)
     remove(FILE_BASENAME ".in");
     remove(FILE_BASENAME ".out");
 
-    return energy*4.359744e-18; // return Joule
+    return energy; // Unit: Eh
 }
