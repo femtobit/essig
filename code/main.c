@@ -76,8 +76,8 @@ int main(int argc, char *argv[])
       case 'T':
         temperature = parse_double(optarg);
         FAIL_UNLESS(temperature != INFINITY
-                    && temperature != -INFINITY
-                    && temperature != NAN);
+                    && temperature != -INFINITY);
+        FAIL_UNLESS(!isnan(temperature));
         break;
       case 'R':
         rotation_translation_ratio = parse_double(optarg);
