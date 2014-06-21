@@ -1,6 +1,6 @@
 /**
  * Here some universal Vector functions
- * 
+ *
  * Author(s):
  *   Michael Hufschmidt <michael@hufschmidt-web.de>
  */
@@ -61,10 +61,10 @@ Vector matrix_times_vector(const Matrix A, const Vector x)
 {
   int i, j;
   Vector z = {{0, 0, 0}};
-  for (i = 0; i < 2; i++)
+  for (i = 0; i <= 2; i++)
   {
     z.x[i] = 0;
-    for (j = 0; j < 2; j++)
+    for (j = 0; j <= 2; j++)
     {
       z.x[i] += A.m[i][j] * x.x[j];
     }
@@ -77,9 +77,9 @@ Matrix matrix_transpose(const Matrix A)
 {
   int i, j;
   Matrix B;
-  for (i = 0; i < 2; i++)
+  for (i = 0; i <= 2; i++)
   {
-    for (j = 0; j < 2; j++)
+    for (j = 0; j <= 2; j++)
     {
       B.m[i][j] = A.m[j][i];
     }
@@ -94,7 +94,6 @@ Matrix matrix_transpose(const Matrix A)
 Matrix euler_rotate(const double e1, const double e2, const double e3)
 {
   Matrix R = {{{1.0, 0, 0},{0, 1.0, 0},{0, 0, 1.0}}}; // Einheitsmatrix
-  // return R;  // nur zum Testen
   R.m[0][0] = 0.0 + cos(e3) * cos(e1) - cos(e2) * sin(e1) * sin(e3);
   R.m[0][1] = 0.0 + cos(e3) * sin(e1) + cos(e2) * cos(e1) * sin(e3);
   R.m[0][2] = 0.0 + sin(e3) * sin(e2);
@@ -103,6 +102,6 @@ Matrix euler_rotate(const double e1, const double e2, const double e3)
   R.m[1][2] = 0.0 + cos(e3) * sin(e2);
   R.m[2][0] = 0.0 + sin(e2) * sin(e1);
   R.m[2][1] = 0.0 - sin(e2) * cos(e1);
-  R.m[3][2] = 0.0 + cos(e2);
-  return R;	
+  R.m[2][2] = 0.0 + cos(e2);
+  return R;
 }

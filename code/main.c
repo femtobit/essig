@@ -45,8 +45,8 @@ int main(int argc, char *argv[])
   unsigned int step_count = 1000000000;
   unsigned int drop_count = 100000;
   double rotation_translation_ratio = 1.0;
-  double max_dist     = 0.2;  // Å
-  double max_angle    = 1 ;    // rad
+  double max_dist     = 0.2;   // Å
+  double max_angle    = 0.7;   // rad
   double temperature  = 293.2; // K
   const char *filename = "essig_protoniert.mol";
 
