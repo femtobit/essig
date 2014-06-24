@@ -15,10 +15,8 @@ def analyze(data, accepted, meta, drop=0, skip=100):
     #data -= np.mean, (data)
 
     text = []
-    if 'date' in meta:
-        text.append("start: %(date)s)" % meta)
-    if 'host' in meta:
-        text.append("host: %(host)s" % meta)
+    for key, value in meta.items():
+        text.append("%s: %s" % (key, value))
     text.append("min = %f a.u. :: $\mu$ = %f a.u." %
                 (np.amin(data), np.mean(data)))
 
@@ -86,6 +84,15 @@ def analyze_errfile(err_fn):
                 date, host = m.groups()
                 meta['date'] = date
                 meta['host'] = host
+            m = re.match(r"^\s+max_dist\s+=\s+([\d\.]+)", line)
+            if m:
+                meta['max_dist'] = m.groups(1)
+            m = re.match(r"^\s+max_angle\s+=\s+([\d\.]+)", line)
+            if m:
+                meta['max_angle'] = m.groups(1)
+            m = re.match(r"^\s+RT ratio\s+=\s+([\d\.]+)", line)
+            if m:
+                meta['RT ratio'] = m.groups(1)
     energy = []
     status = []
     for n, s, E, dE in data:
