@@ -115,7 +115,8 @@ void molecule_read_from_file(Molecule *mol, FILE *fp);
 /**
  * Performs a deep copy of the Molecule @p src to @p dest.
  * This operation requires dest->atoms and dest->bonds to be
- * already allocated or NULL.
+ * already allocated (with dest->bonds having exactly the size
+ * of @p src->bonds) or NULL.
  */
 void molecule_deep_copy(Molecule *dest, const Molecule *src);
 

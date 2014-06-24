@@ -7,6 +7,7 @@
  */
 #include "essig.h"
 #include "vector.h"
+#include "util.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -47,7 +48,15 @@ void build_rights(Bond *bonds, size_t start_bond, size_t start_atom, size_t atom
   }
   /*every atom that has been reached is saved in rights array of the bond
    * we are looking at*/
-  bonds[start_bond].right = malloc(sizeof(size_t)*right_count);
+  if(right_count != 0)
+  {
+    bonds[start_bond].right = malloc(sizeof(size_t)*right_count);
+    CHECK_ALLOC(bonds[start_bond].right);
+  }  
+  else
+    bonds[start_bond].right = NULL;
+
+
   for(i=0, j= 0; i<atom_count;i++)
   {
     if(bools[i] && i != start_atom)
