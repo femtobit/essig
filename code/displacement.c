@@ -5,12 +5,13 @@
  *  Florian Jochheim<florian.jochheim@gmx.de>
  *  Jan Fabian Schmid <2schmid@inf>
  */
-#include<stdlib.h>
-#include"vector.h"
-#include"essig.h"
-#include<time.h>
 #include <math.h>
+#include <stdlib.h>
+#include <time.h>
 
+#include "essig.h"
+#include "util.h"
+#include "vector.h"
 
 Vector random_vector(double max_dist)
 {
@@ -32,6 +33,11 @@ void transform_random_displacement(Molecule *mol, double max_dist)
   atom_index = drand48()*mol->atom_count;
   mol->atoms[atom_index].pos = vector_add(mol->atoms[atom_index].pos, direction);
   transform_reset_origin(mol);
+
+  DEBUG_PRINTF("Displaced %s atom #%zu by (%f,%f,%f) Å\n",
+    mol->atoms[atom_index].element_symbol,
+    atom_index,
+    direction.x[0], direction.x[1], direction.x[2]);
 }
 
 void transform_reset_origin(Molecule *mol)
