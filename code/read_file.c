@@ -140,11 +140,11 @@ void molecule_read_from_file(Molecule *mol, FILE *fp)
     build_rights(bonds, i, bonds[i].second, atom_count, bonds_count); 
     if(bonds[i].right_count == 0 || bonds[i].right_count == atom_count - 2)
     {
-      bonds[i].rotate = false;
+      bonds[i].rotatable = false;
     }
     else
     {
-      bonds[i].rotate = true;
+      bonds[i].rotatable = true;
     }
   }
   mol->atoms = atoms;

@@ -36,7 +36,7 @@ typedef struct
   /// Stored here as an optimization.
   size_t *right;
   size_t right_count;
-  bool rotate;
+  bool rotatable;
 } Bond;
 
 typedef struct

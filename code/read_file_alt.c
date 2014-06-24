@@ -123,6 +123,7 @@ void molecule_read_from_file(Molecule *mol, FILE *fp)
     bonds_count++;
     if(bonds_count != 1)
       bonds = realloc(bonds, sizeof(*bonds)*bonds_count);
+    bonds[bonds_count-1].rotatable = true;
 
     if(2 != sscanf(token,"%zu-%zu", &first, &second))
     {

@@ -22,7 +22,9 @@ void transform_random_rotation(Molecule *mol, double max_angle)
 {
   size_t bond_index;
   double phi = 0;
-  bond_index = drand48() * mol->bond_count;
+  do {
+    bond_index = drand48() * mol->bond_count;
+  } while(!mol->bonds[bond_index].rotatable);
   phi = drand48()*max_angle*2.0 - max_angle;
   molecule_rotate(mol, mol->bonds[bond_index], phi);
 
