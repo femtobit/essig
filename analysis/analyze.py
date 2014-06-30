@@ -5,8 +5,11 @@ import sys
 import re
 import matplotlib.pyplot as plt
 import numpy as np
-from pprint import pprint
 
+try:
+    import seaborn as sns
+except ImportError:
+    pass
 
 def analyze(data, accepted, meta, drop=0, skip=100):
     data = np.array(data)[drop:]
@@ -17,8 +20,6 @@ def analyze(data, accepted, meta, drop=0, skip=100):
     text = []
     for key, value in meta.items():
         text.append("%s: %s" % (key, value))
-    text.append("min = %f a.u. :: $\mu$ = %f a.u." %
-                (np.amin(data), np.mean(data)))
 
     plt.subplot(221)
     plt.title("Histogram of encountered energy values")
@@ -60,11 +61,11 @@ def analyze(data, accepted, meta, drop=0, skip=100):
 
     text.append("percent accepted: %.4f%%" %
                 ((accepted_count / data_count) * 100))
+    text.append("min = %f a.u." % np.amin(data))
+    text.append("µ = %f a.u." % np.mean(data))
     plt.suptitle(" :: ".join(text))
 
     plt.show()
-
-    #pprint([(i, data[i]) for i in range(101)])
 
 
 def analyze_errfile(err_fn):
@@ -86,13 +87,13 @@ def analyze_errfile(err_fn):
                 meta['host'] = host
             m = re.match(r"^\s+max_dist\s+=\s+([\d\.]+)", line)
             if m:
-                meta['max_dist'] = m.groups(1)
+                meta['max_dist'] = m.groups(1)[0]
             m = re.match(r"^\s+max_angle\s+=\s+([\d\.]+)", line)
             if m:
-                meta['max_angle'] = m.groups(1)
+                meta['max_angle'] = m.groups(1)[0]
             m = re.match(r"^\s+RT ratio\s+=\s+([\d\.]+)", line)
             if m:
-                meta['RT ratio'] = m.groups(1)
+                meta['RT ratio'] = m.groups(1)[0]
     energy = []
     status = []
     for n, s, E, dE in data:
@@ -100,4 +101,6 @@ def analyze_errfile(err_fn):
         status.append(True) if s == "A" else status.append(False)
     analyze(energy, status, meta)
 
-analyze_errfile(sys.argv[1])
+if __name__ == "__main__":
+    analyze_errfile(sys.argv[1])
+
