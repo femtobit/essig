@@ -40,6 +40,21 @@ static double parse_double(const char *src)
   return strtod(src, NULL); // FIXME handle errors
 }
 
+
+static void read_molecule(Molecule *mol, const char *filename)
+{
+  FILE *infile;
+
+  infile = fopen(filename, "r");
+  if(infile == NULL)
+  {
+    FAIL("Error: Could not open file '%s'\n", filename);
+  }
+  molecule_read_from_file(mol, infile);
+  fclose(infile);
+}
+
+
 int main(int argc, char *argv[])
 {
   unsigned int step_count = 1000000000;
@@ -48,10 +63,12 @@ int main(int argc, char *argv[])
   double max_dist     = 0.2;   // Å
   double max_angle    = 0.7;   // rad
   double temperature  = 293.2; // K
+  bool output_intermediate = false;
   const char *filename = "essig_protoniert.mol";
+  const char *second_filename = NULL;
 
   int opt;
-  while((opt = getopt(argc, argv, "n:d:D:A:T:R:f:")) != -1)
+  while((opt = getopt(argc, argv, "n:d:D:A:T:R:f:F:v:")) != -1)
   {
     switch(opt)
     {
@@ -87,6 +104,12 @@ int main(int argc, char *argv[])
       case 'f':
         filename = optarg;
         break;
+      case 'F':
+        second_filename = optarg;
+        break;
+      case 'v':
+        output_intermediate = true;
+        break;
       default:
         FAIL(usage, argv[0]);
     }
@@ -94,16 +117,12 @@ int main(int argc, char *argv[])
 
   srand48(time(NULL));
 
-  FILE *molecule_input;
-  molecule_input = fopen(filename, "r");
-  if(molecule_input == NULL)
-  {
-    FAIL("Error: Could not open file '%s'\n", filename);
-  }
+  Molecule *molecules[2];
+  molecules[0] = molecule_new();
+  molecules[1] = molecule_new();
 
-  Molecule *molecule = molecule_new();
-  molecule_read_from_file(molecule, molecule_input);
-  fclose(molecule_input);
+  read_molecule(molecules[0], filename);
+  read_molecule(molecules[1], second_filename);
 
   const time_t t = time(NULL);
   struct tm *td = localtime(&t);
@@ -116,8 +135,8 @@ int main(int argc, char *argv[])
     strcpy(hostname, "unknown host");
   }
 
-  DEBUG_PRINTF("Starting simulation at %s on %s:\n"
-               "  step count\t= %u\n"
+  fprintf(stderr, "Starting simulation at %s on %s:\n"
+               "  step_count\t= %u\n"
                "  drop_count\t= %u\n"
                "  max_dist\t= %f Å\n"
                "  max_angle\t= %f rad\n"
@@ -132,9 +151,11 @@ int main(int argc, char *argv[])
                rotation_translation_ratio,
                temperature);
 
-  run_simulation(molecule, 1, step_count, drop_count, max_dist, max_angle,
-                 rotation_translation_ratio, temperature, true);
+  run_simulation(molecules, step_count, drop_count,
+                 max_dist, max_angle, rotation_translation_ratio,
+                 temperature, output_intermediate);
 
-  molecule_free(molecule);
+  molecule_free(molecules[0]);
+  molecule_free(molecules[1]);
   return EXIT_SUCCESS;
 }

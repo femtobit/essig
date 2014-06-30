@@ -11,22 +11,35 @@
 
 #include "util.h"
 
-static void random_move(Molecule *mol, double max_dist, double max_angle,
+static void random_move(Molecule **mols, double max_dist, double max_angle,
                         double rotation_translation_ratio)
 {
+  bool mol_index = drand48() < 0.5;
+  DEBUG_PRINTF("Moving molecule #%d\n", mol_index);
   double rand = drand48();
   if(rand < rotation_translation_ratio)
   {
-    transform_random_displacement(mol, max_dist);
+    transform_random_displacement(mols[mol_index], max_dist);
   }
   else
   {
-    transform_random_rotation(mol, max_angle);
+    transform_random_rotation(mols[mol_index], max_angle);
   }
 }
 
-void run_simulation(Molecule *mol,
-                    size_t molecule_count,
+static double calculate_energy(Molecule **mols, const double kT)
+{
+  double E0 = orca_calculate_energy(mols[0]);
+  double E1 = orca_calculate_energy(mols[1]);
+
+  double E = log(exp(E0 / kT) + exp(E1 / kT)) / kT;
+
+  DEBUG_PRINTF("Calculating E = log(exp(%.6f) + exp(%.6f)) / kT = %.6f\n",
+               E0 / kT, E1 / kT, E);
+  return E;
+}
+
+void run_simulation(Molecule **mols,
                     unsigned int step_count,
                     unsigned int drop_count,
                     double max_dist,
@@ -35,8 +48,7 @@ void run_simulation(Molecule *mol,
                     double temperature,
                     bool output_intermediate)
 {
-  UNUSED(molecule_count);
-  assert(mol != NULL);
+  assert(mols != NULL);
   assert(step_count > 0);
   assert(max_dist > 0);
   assert(max_angle > 0);
@@ -45,19 +57,23 @@ void run_simulation(Molecule *mol,
 
   const double kT = temperature * BOLTZMANN_CONSTANT;
   double energy;
-  double last_energy = orca_calculate_energy(mol);
+  double last_energy = calculate_energy(mols, kT);
 
-  Molecule *local_mol = molecule_new();
+  Molecule **local_mols = malloc(2 * sizeof(*local_mols));
+  CHECK_ALLOC(local_mols);
+  local_mols[0] = molecule_new();
+  local_mols[1] = molecule_new();
 
   bool accepted;
   for(unsigned int i = 0; i < step_count; i++)
   {
     accepted = false;
-    molecule_deep_copy(local_mol, mol);
+    molecule_deep_copy(local_mols[0], mols[0]);
+    molecule_deep_copy(local_mols[1], mols[1]);
 
-    random_move(local_mol, max_dist, max_angle, rotation_translation_ratio);
+    random_move(local_mols, max_dist, max_angle, rotation_translation_ratio);
 
-    energy = orca_calculate_energy(local_mol);
+    energy = calculate_energy(local_mols, kT);
     double energy_delta = energy - last_energy;
 
     if(energy_delta < 0)
@@ -76,29 +92,35 @@ void run_simulation(Molecule *mol,
     }
 
     // debug output calculated energy
-    fprintf(stderr, "[%d] %s\t%f\t[ΔE=%f]\n",
+    fprintf(stderr, "\n[%d] %s\t%f\t[ΔE=%f]\n",
            i,
            accepted ? "A" : "R",
            energy,
            energy_delta);
-    char *atom_list = molecule_format_atom_list(local_mol);
-    fprintf(stderr, "%s\n", atom_list);
-    free(atom_list);
+    if(output_intermediate)
+    {
+      fprintf(stderr, "    Molecule #0:");
+      char *atom_list = molecule_format_atom_list(local_mols[0]);
+      fprintf(stderr, "%s\n", atom_list);
+      free(atom_list);
+      fprintf(stderr, "    Molecule #1:");
+      atom_list = molecule_format_atom_list(local_mols[1]);
+      fprintf(stderr, "%s\n", atom_list);
+      free(atom_list);
+    }
 
     if(accepted)
     {
-      molecule_deep_copy(mol, local_mol);
+      molecule_deep_copy(mols[0], local_mols[0]);
+      molecule_deep_copy(mols[1], local_mols[1]);
       last_energy = energy;
       if(i >= drop_count)
       {
         printf("%lf\n", energy);
       }
-
-      if(output_intermediate)
-      {
-        molden_output_molecule(local_mol);
-      }
     }
   }
-  molecule_free(local_mol);
+  molecule_free(local_mols[0]);
+  molecule_free(local_mols[1]);
+  free(local_mols);
 }

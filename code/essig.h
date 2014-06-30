@@ -57,7 +57,8 @@ typedef struct
  * Simulates the molecule using orca and outputs the calculated
  * energies to stdout.
  *
- * @param mol                        The molecule to be simulated.
+ * @param molecules                  An array of pointers to the
+ *                                   molecules to be simulated.
  * @param step_count                 The number of performed simulation steps.
  * @param drop_count                 The number of results dropped at the start of the
  *                                   simulation.
@@ -72,8 +73,7 @@ typedef struct
  *                                   to the calculated energies) also output the intermediate
  *                                   molecule configurations generated in each step.
  */
-void run_simulation(Molecule *mol,
-                    size_t molecule_count,
+void run_simulation(Molecule **molecules,
                     unsigned int step_count,
                     unsigned int drop_count,
                     double max_dist,
