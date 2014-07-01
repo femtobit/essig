@@ -11,6 +11,9 @@
 
 #include "util.h"
 
+#define PROTONATED_BASE_ENERGY -32.592475724767
+#define UNPROTONATED_BASE_ENERGY -32.057124772061
+
 static void random_move(Molecule **mols, double max_dist, double max_angle,
                         double rotation_translation_ratio)
 {
