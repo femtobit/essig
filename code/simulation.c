@@ -35,7 +35,8 @@ static double calculate_energy(Molecule **mols, const double kT)
   double E0 = orca_calculate_energy(mols[0]);
   double E1 = orca_calculate_energy(mols[1]);
 
-  double E = log(exp(E0 / kT) + exp(E1 / kT)) / kT;
+  double E = log(exp((PROTONATED_BASE_ENERGY - E0) / kT)
+               + exp((PROTONATED_BASE_ENERGY - E1) / kT)) * kT;
 
   DEBUG_PRINTF("Calculating E = log(exp(%.6f) + exp(%.6f)) / kT = %.6f\n",
                E0 / kT, E1 / kT, E);
