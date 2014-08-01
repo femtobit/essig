@@ -23,7 +23,7 @@ def analyze(data, accepted, meta, drop=0, skip=100):
 
     plt.subplot(221)
     plt.title("Histogram of encountered energy values")
-    n, bins, patches = plt.hist(data, 50, facecolor='red')
+    n, bins, patches = plt.hist(data, 500, facecolor='red')
     plt.plot(bins)
     plt.xlabel('Energy [a.u.]')
     plt.ylabel('Occurences')

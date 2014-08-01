@@ -90,7 +90,7 @@ void molecule_read_from_file(Molecule *mol, FILE *fp)
   buffer[buffer_size-1] = '\0';
   
   token = strtok(buffer, "\n");
-  assert(strcmp(token, "> Atoms") == 0);
+  FAIL_UNLESS(strcmp(token, "> Atoms") == 0);
   
   token = strtok(NULL, "\n");
 
@@ -110,8 +110,7 @@ void molecule_read_from_file(Molecule *mol, FILE *fp)
     if(3 != sscanf(&token[i+1],
                     "%lf\t%lf\t%lf",&(pos.x[0]),&(pos.x[1]), &(pos.x[2])))
     {
-      fprintf(stderr, "Koordinates in wrong format for %zu\n", atom_count-1);
-      exit(EXIT_FAILURE);
+      FAIL("Koordinates in wrong format for %zu\n", atom_count-1);
     }
     
     token = strtok(NULL, "\n");
